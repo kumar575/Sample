@@ -69,6 +69,7 @@ class ViewController: UIViewController {
         plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         plusPhotoButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         
+
         setUpInputFields()
       
     }
@@ -94,6 +95,7 @@ class ViewController: UIViewController {
     stackView.heightAnchor.constraint(equalToConstant: 200).isActive = true
     
     }
+
 
 
 }
