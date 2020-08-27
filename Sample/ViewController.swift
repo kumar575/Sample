@@ -40,12 +40,13 @@ class ViewController: UIViewController {
         
         
         view.addSubview(emailTextField)
-        emailTextField.topAnchor.constraint(equalTo: plusPhotoButton.bottomAnchor , constant:  20).isActive = true
-        emailTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40).isActive = true
-        emailTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 40).isActive = true
-        emailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        NSLayoutConstraint.activate([
+            emailTextField.topAnchor.constraint(equalTo: plusPhotoButton.bottomAnchor , constant:  20),
+            emailTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
+            emailTextField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 40),
+        emailTextField.heightAnchor.constraint(equalToConstant: 50)
         
-    }
+    ])}
 
 
 }
