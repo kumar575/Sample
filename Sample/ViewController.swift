@@ -71,7 +71,7 @@ class ViewController: UIViewController {
 //        plusPhotoButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
         
         plusPhotoButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingRight: 0, paddingbottom: 0, width: 140, height: 140)
-        plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true 
+        plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true   
 
         setUpInputFields()
       
