@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ViewController: UIViewController {
     
@@ -26,8 +27,21 @@ class ViewController: UIViewController {
         tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.addTarget(self, action: #selector(handleTextInputChanged), for: .editingChanged)
         return tf
     }()
+    
+   @objc func handleTextInputChanged() {
+    let isFormValid = emailTextField.text?.count ?? 0 > 0 && userNameTextField.text?.count ?? 0 > 0 && passWordTextField.text?.count ?? 0 > 0
+    if isFormValid {
+        signUpButton.isEnabled = true
+        signUpButton.backgroundColor = .green
+    }else {
+        signUpButton.isEnabled = false 
+        signUpButton.backgroundColor = .blue
+    }
+    
+    }
     
     let userNameTextField : UITextField = {
         let tf = UITextField()
@@ -36,6 +50,7 @@ class ViewController: UIViewController {
         tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.addTarget(self, action: #selector(handleTextInputChanged), for: .editingChanged)
         return tf
     }()
     
@@ -47,8 +62,39 @@ class ViewController: UIViewController {
         button.layer.cornerRadius = 5
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+        button.isEnabled  = false
         return button
     }()
+    
+    @objc func handleSignUp() {
+        //print("123")
+        
+        guard let email = emailTextField.text, email.count > 0 else {
+            return
+        }
+        
+        guard let username = userNameTextField.text, username.count > 0 else {
+            return
+        }
+        
+        guard let password = passWordTextField.text, password.count > 0 else {
+            return
+        }
+        
+
+        
+        let auth = Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+            if let err = error {
+                print("Failed to create user: ", err)
+                return
+            }
+            print("Successfully created user", authResult?.additionalUserInfo?.providerID)
+        }
+            
+        
+    }
+    
     
     let passWordTextField : UITextField = {
         let tf = UITextField()
@@ -57,6 +103,7 @@ class ViewController: UIViewController {
         tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
         tf.borderStyle = .roundedRect
         tf.font = UIFont.systemFont(ofSize: 14)
+        tf.addTarget(self, action: #selector(handleTextInputChanged), for: .editingChanged)
         return tf
     }()
     
@@ -65,10 +112,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.addSubview(plusPhotoButton)
-//        plusPhotoButton.heightAnchor.constraint(equalToConstant: 140).isActive = true
-//        plusPhotoButton.widthAnchor.constraint(equalToConstant: 140).isActive = true
-//        plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-//        plusPhotoButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
+
         
         plusPhotoButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingRight: 0, paddingbottom: 0, width: 140, height: 140)
         plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true   
@@ -91,11 +135,7 @@ class ViewController: UIViewController {
     stackView.axis = .vertical
     stackView.spacing = 10
     view.addSubview(stackView)
-    
-//    stackView.topAnchor.constraint(equalTo: plusPhotoButton.bottomAnchor , constant:  20).isActive = true
-    //stackView.anchor(top: plusPhotoButton.bottomAnchor, paddingTop: 20)
-//    stackView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40).isActive = true
-//    stackView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -40).isActive = true
+
     stackView.heightAnchor.constraint(equalToConstant: 200).isActive = true
     
     
